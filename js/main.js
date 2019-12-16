@@ -360,3 +360,113 @@ var password=document.getElementById('register_password').onblur=function(){
 //     });
 // return false;
 // });
+$(document).ready(function () {
+  $('#temp').hide();
+  $('#temp2').hide();
+  var x = $('#fetch_categories');
+  $("input[name='price']").on('click',function(){
+      var price=$("input[name='price']:checked").val();
+      if(price==0){
+        $('#temp2').hide();
+      }else{
+        $('#temp2').show();
+      }
+  });
+    $.ajax({
+        url: "classes/book.php",
+        method: "GET",
+        data: { cat: "fetch_category",place:'option'},
+        success: function (e) {
+            x.html(e);
+            } 
+
+    });
+    x.change(function(){
+        $('#temp').show();
+        var b=$('#fetch_branches');
+        var id=x.children('option:selected').val();
+       
+        $.ajax({
+            url: "classes/book.php",
+            method: "GET",
+            data: {branch: "fetch_branch",place:'addnew',id:id},
+            success: function (e) {
+                b.html(e);
+            }
+    
+        });
+    });
+
+   
+});
+
+function addbook(){
+    var data=new FormData(document.getElementById('form_new_book'));
+    data.append('book_operation','add');
+    $.ajax({
+        url: "classes/book.php",
+        method: "POST",
+        data:data,
+        cache: false,
+        contentType: false,
+        processData: false,
+        success: function (c) {
+            if(c==10){
+               x1=document.createElement('div');
+               x2=document.createElement('div');
+               x1.setAttribute('class','col-xs-12');
+               x2.setAttribute('class','alert alert-success');
+               x2.innerHTML="Book Inserted Successfully";
+               x1.appendChild(x2);
+               $('#addresult').html(x1);
+               $('#btn-add').attr('disabled',true);
+               setTimeout(function(){
+                $('#modal-id').modal('hide');
+                $('#form_new_book')[0].reset();
+               $('#addresult').html("");
+               $('#btn-add').attr('disabled',false);
+               },2000);
+               
+            }else{
+                $('#addresult').html(c);
+              
+                
+            }
+           
+        }
+    });
+   
+}
+var branch=null;
+function getbooks(branch_id,pagenumber=1){
+    branch=branch_id;
+    $.ajax({
+        url: "classes/book.php",
+        method: "GET",
+        data: {
+            id: branch_id,
+            book_operation: "showbycat",
+            page: pagenumber,
+            branch:'exist'
+        },
+        success: function(e) {
+            $('#data').html(e);
+           // createPagination(branch_id);
+        }
+    });
+    
+}
+function createPagination(branch){
+    $.ajax({
+        url: "classes/book.php",
+        method: "GET",
+        data: {
+            call: 'pagin',
+            branch_id:branch
+        },
+        success: function(e) {
+            $('#pagin').html(e);
+
+        }
+    });
+}

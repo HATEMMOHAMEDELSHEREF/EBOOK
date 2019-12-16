@@ -1,7 +1,7 @@
 <?php
 session_start();
-$page_name="My Profile";
-$index=3;
+$page_name = "My Profile";
+$index = 3;
 require_once('header.php');
 require_once('navbar.php');
 ?>
@@ -37,40 +37,40 @@ require_once('navbar.php');
         </div>
         <div class="col-lg-4 col-md-4 col-sx-12 text-capitalize user-info">
             <div class="col-xs-12 text-center">
-                <img src=" <?php echo $_SESSION['user_avatar']?>" class="img-circle img-avatar" >
+                <img src=" <?php echo $_SESSION['user_avatar'] ?>" class="img-circle img-avatar">
             </div>
             <div class="col-sm-6 col-xs-12">
                 Name:
             </div>
             <div class="col-sm-6 col-xs-12">
-                <?php echo $_SESSION['user_fname'].' '.$_SESSION['user_lname']?>
+                <?php echo $_SESSION['user_fname'] . ' ' . $_SESSION['user_lname'] ?>
             </div>
             <div class="col-sm-6 col-xs-12">
                 Email :
             </div>
             <div class="col-sm-6 col-xs-12">
-            <?php echo $_SESSION['user_email']?>
+                <?php echo $_SESSION['user_email'] ?>
             </div>
             <div class="col-sm-6 col-xs-12">
                 Phone:
             </div>
             <div class="col-sm-6 col-xs-12">
-            <?php echo $_SESSION['user_phone']?>
+                <?php echo $_SESSION['user_phone'] ?>
             </div>
             <div class="col-sm-6 col-xs-12">
                 Location :
             </div>
             <div class="col-sm-6 col-xs-12">
-            <?php echo $_SESSION['user_location']?>
+                <?php echo $_SESSION['user_location'] ?>
             </div>
             <?php
-            if($_SESSION['user_role']=='admin' or $_SESSION['user_role']=='publisher'){
+            if ($_SESSION['user_role'] == 'admin' or $_SESSION['user_role'] == 'publisher') {
                 echo '
                 <div class="col-sm-6 col-xs-12">
                 Role :
             </div>
             <div class="col-sm-6 col-xs-12">
-           '.$_SESSION['user_role'].'
+           ' . $_SESSION['user_role'] . '
             </div>
                 ';
             }
@@ -169,13 +169,14 @@ require_once('navbar.php');
             <div class="modal-body">
 
 
-                <form action="" method="POST" class="form-horizontal" role="form">
+                <form  class="form-horizontal" id="form_new_book" role="form" enctype="multipart/form-data">
                     <div class="form-group">
+                        <div id="addresult"></div>
                         <div class="col-sm-3">
                             <label class="form-control-static">Book Name</label>
                         </div>
                         <div class="col-sm-6">
-                            <input type=text class="form-control">
+                            <input type=text class="form-control" name="book_name">
                         </div>
                     </div>
                     <div class="form-group">
@@ -183,7 +184,7 @@ require_once('navbar.php');
                             <label class="form-control-static">Author Name</label>
                         </div>
                         <div class="col-sm-6">
-                            <input type=text class="form-control">
+                            <input type=text class="form-control" name="author_name">
                         </div>
                     </div>
                     <div class="form-group">
@@ -191,7 +192,7 @@ require_once('navbar.php');
                             <label class="form-control-static">Book Description</label>
                         </div>
                         <div class="col-sm-6">
-                            <textarea class="form-control" rows="2"></textarea>
+                            <textarea class="form-control" rows="2" name="book_description"></textarea>
                         </div>
                     </div>
                     <div class="form-group">
@@ -199,31 +200,26 @@ require_once('navbar.php');
                             <label class="form-control-static">Book Category</label>
                         </div>
                         <div class="col-sm-3">
-                            <select class="form-control">
-                                <option selected value="" disabled>category..</option>
-                                <option value="">book</option>
-                                <option value="">short stort</option>
-                                <option value="">novel</option>
+                            <select class="form-control" name="book_category" id="fetch_categories">
                                 <select>
                         </div>
-                        <div class="col-sm-3">
-                            <label class="form-control-static">Book Branch <i class="fa fa-chevron-right gray"></i> </label>
-                        </div>
-                        <div class="col-sm-3">
-                            <select class="form-control">
-                                <option selected value="" disabled>branch..</option>
-                                <option value="">book</option>
-                                <option value="">short stort</option>
-                                <option value="">novel</option>
-                                <select>
-                        </div>
+                        <span id="temp">
+                            <div class="col-sm-2">
+                                <label class="form-control-static">Branch <i class="fa fa-chevron-right gray"></i> </label>
+                            </div>
+                            <div class="col-sm-4">
+                                <select class="form-control" name="book_branch" id="fetch_branches">
+
+                                    <select>
+                            </div>
+                        </span>
                     </div>
                     <div class="form-group">
                         <div class="col-sm-3">
                             <label class="form-control-static">Released Date</label>
                         </div>
                         <div class="col-sm-6">
-                            <input type="date" class="form-control">
+                            <input type="date" class="form-control" name="book_released_date">
                         </div>
                     </div>
                     <div class="form-group">
@@ -231,22 +227,24 @@ require_once('navbar.php');
                             <label class="form-control-static">Book Price</label>
                         </div>
                         <div class="col-sm-3 form-control-static">
-                            free <input type="radio" name="free">
-                            cache <input type="radio" name="free">
+                            free <input type="radio" name="price" value="0">
+                            Paid <input type="radio" name="price" value="1">
                         </div>
-                        <div class="col-sm-3">
-                            <label class="form-control-static">Book Branch <i class="fa fa-chevron-right" style="color:#333;"></i> </label>
-                        </div>
+                        <span id="temp2">
                         <div class="col-sm-2">
-                            <input type="number" min=1 class="form-control">
+                            <label class="form-control-static">Price <i class="fa fa-chevron-right" style="color:#333;"></i> </label>
                         </div>
+                        <div class="col-sm-4">
+                            <input type="number" min=1 class="form-control" name="book_price">
+                        </div>
+                        </span>
                     </div>
                     <div class="form-group">
                         <div class="col-sm-3">
                             <label class="form-control-static">Book Avatar</label>
                         </div>
                         <div class="col-sm-6">
-                            <input type="file" class="form-control">
+                            <input type="file" class="form-control" name="book_avatar">
                         </div>
                     </div>
                     <div class="form-group">
@@ -254,7 +252,7 @@ require_once('navbar.php');
                             <label class="form-control-static">Book </label>
                         </div>
                         <div class="col-sm-6">
-                            <input type="file" class="form-control">
+                            <input type="file" class="form-control" name="book">
                         </div>
                     </div>
                 </form>
@@ -263,7 +261,7 @@ require_once('navbar.php');
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-danger">Add</button>
+                <button type="button" id="btn-add" name="add_new_book" class="btn btn-danger" onclick="addbook();">Add</button>
             </div>
         </div>
     </div>

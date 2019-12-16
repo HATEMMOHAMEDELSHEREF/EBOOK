@@ -23,8 +23,8 @@ if (isset($_POST['login'])) {
         $_SESSION['user_book_uploaded'] = $row['user_book_uploaded'];
         $_SESSION['user_book_downloaded'] = $row['user_book_downloaded'];
         $_SESSION['user_password'] = $row['user_password'];
-        setcookie('email',$_SESSION['user_email'],time()+(360*30),'/'); 
-        setcookie('password',$_SESSION['user_password'],time()+(360*30),'/');
+       // setcookie('email',$_SESSION['user_email'],time()+(3600*30),'/'); 
+        //setcookie('password',$_SESSION['user_password'],time()+(3600*30),'/');
 
         if (!empty($_POST['activecookies'])) {
             setcookie("email", $_POST['email'], time() + (3600 * 30), "/");
@@ -51,7 +51,7 @@ require_once('navbar.php');
             }
             ?>
 
-            <form class="form" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>" id="registrationForm">
+            <form class="form" method="post" autocomplete="on" action="<?php echo $_SERVER['PHP_SELF']; ?>" id="registrationForm">
                 <div class="form-group ">
                     <!-- has-error has-feedback -->
                     <label for="email">
@@ -72,7 +72,7 @@ require_once('navbar.php');
                     <label for="cookies">
                         <h4><a>Forget My Password</a></h4>
                     </label><br>
-                    <input type="checkbox" name="activecookies" value="on">
+                    <input type="checkbox" name="activecookies">
                     <label for="cookies">
                         <h4>Remember Me</h4>
                     </label>

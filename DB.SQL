@@ -38,13 +38,14 @@ book_branch_id integer(255) not null,
 book_release_date date not null,
 book_publish_date datetime default now(),
 book_avatar varchar(255) unique,
+book varchar(255) unique,
 book_size decimal(5,2) not null,
 book_price decimal(5,2) not null,
 book_status varchar(255) default 'published',
-book_downloaded_number integer(255),
-book_like_number integer(255),
-book_dislike_number integer(255),
-book_comment_number integer(255),
+book_downloaded_number integer(255) default '0',
+book_like_number integer(255) default '0',
+book_dislike_number integer(255) default '0',
+book_comment_number integer(255) default '0',
 book_rate decimal(3,2) default '0',
 book_rate_counter integer(255) default '0'
 );
@@ -98,3 +99,9 @@ create table likes(
     YOU NEED TO ANALYSIS BEFORE DESIGN
     */
 
+create table download(
+download_id integer(255) primary key auto_increment,
+book_id integer(255),
+user_id integer(255)  default"0",
+download_date datetime default now()
+);

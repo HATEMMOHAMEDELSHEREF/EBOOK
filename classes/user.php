@@ -226,7 +226,7 @@ class user
                 $extension = end($img_info);
                 $extension = strtolower($extension);
                 if (in_array($extension, $allowed)) {
-                    $newName = uniqid("user") . $extension;
+                    $newName = uniqid("user") .'.'. $extension;
                     $imagedestination .= $newName;
                     $this->avatar = $imagedestination;
                     move_uploaded_file($imagetmp, $imagedestination);

@@ -6,6 +6,12 @@ if(!isset($_SESSION['user_id'])){
 }else{
     if($index==0 or $index==1){
         header('location:index.php');
+    }else{
+        if($index==3){
+            if($_SESSION['user_role']=='user'){
+                header('location:index.php');
+            }
+        }
     }
 }
 ?>
@@ -23,6 +29,7 @@ if(!isset($_SESSION['user_id'])){
     <link rel="stylesheet" type="text/css" href="css/wow.css">
     <link rel="stylesheet" type="text/css" href="css/style.css">
     <title><?= $page_name; ?></title>
+    <script type="text/javascript" src="js/jquery-3.1.1.min.js"></script>
 </head>
 
 <body>
